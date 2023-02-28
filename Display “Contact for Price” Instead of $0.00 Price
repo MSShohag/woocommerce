@@ -1,4 +1,6 @@
 #Display “Contact for Price” Instead of $0.00 Price
+
+<?php
 add_filter( 'woocommerce_get_price_html', 'bbloomer_price_free_zero', 9999, 2 );
    
 function bbloomer_price_free_zero( $price, $product ) {
