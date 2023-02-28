@@ -1,0 +1,26 @@
+#Display “Contact for Price” Instead of $0.00 Price
+add_filter( 'woocommerce_get_price_html', 'bbloomer_price_free_zero', 9999, 2 );
+   
+function bbloomer_price_free_zero( $price, $product ) {
+    if ( $product->is_type( 'variable' ) ) {
+        $prices = $product->get_variation_prices( true );
+        $min_price = current( $prices['price'] );
+        if ( 0 == $min_price ) {
+            $max_price = end( $prices['price'] );
+            $min_reg_price = current( $prices['regular_price'] );
+            $max_reg_price = end( $prices['regular_price'] );
+            if ( $min_price !== $max_price ) {
+                $price = wc_format_price_range( ' Contact for Price', $max_price );
+                $price .= $product->get_price_suffix();
+            } elseif ( $product->is_on_sale() && $min_reg_price === $max_reg_price ) {
+                $price = wc_format_sale_price( wc_price( $max_reg_price ), ' Contact for Price' );
+                $price .= $product->get_price_suffix();
+            } else {
+                $price = ' Contact for Price';
+            }
+        }
+    } elseif ( 0 == $product->get_price() ) {
+        $price = '<a href="https://wa.me/8801770328858" target="_blank"><span class="woocommerce-Price-amount amount call"> Contact for Price</span></a>';
+    }  
+    return $price;
+}
