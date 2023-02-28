@@ -1,0 +1,8 @@
+Increase Woo Commerce Unavailable/Disabled/Out of Stock Variation Limit
+
+<?php
+function custom_woocommerce_ajax_variation_threshold( $qty, $product ) {
+     return 1000; // Set 1000 to another number to load faster
+}
+
+add_filter( 'woocommerce_ajax_variation_threshold', 'custom_woocommerce_ajax_variation_threshold', 10, 2 );
