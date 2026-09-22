@@ -46,12 +46,12 @@ $min_price === $max_price: Checks if there is only a single active price point (
 
 $product->is_on_sale(): Confirms the item is discounted.
 
-Return Value: Replaces the default single price output with standard WooCommerce markup: <del> for the regular price and <ins> for the discounted sale price.
+Return Value: Replaces the default single price output with standard WooCommerce markup: "<del> "for the regular price and "<ins>" for the discounted sale price.
 
 2. Always Show Variation Price (woocommerce_show_variation_price)
    Forces WooCommerce to treat variation prices as visible, bypassing the default check that hides them when all variation prices match.
 
 3. Variation Data JSON Filter (woocommerce_available_variation)
-   Injects formatted HTML (<del> regular + <ins> sale) directly into the JavaScript variation payload (data-product_variations JSON attribute).
+   Injects formatted HTML ("<del> "regular + "<ins>" sale) directly into the JavaScript variation payload (data-product_variations JSON attribute).
 
 When a user clicks variation swatches or dropdowns, the price block dynamically renders the strikethrough regular price and the active sale price.
