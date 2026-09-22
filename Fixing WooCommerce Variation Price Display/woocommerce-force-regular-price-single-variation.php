@@ -1,3 +1,4 @@
+<?php
 /**
  * Title: WooCommerce Force Strikethrough Regular Price for Single Variations
  * Description: Fixes WooCommerce suppressing the strikethrough <del> regular price
