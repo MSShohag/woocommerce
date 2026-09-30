@@ -46,3 +46,11 @@ A high-performance, zero-bloat abandoned cart recovery system designed for Bangl
 6. Verify that the entry appears with the phone number, name, linked item title, and total.
 7. Click the **WhatsApp** or **Copy URL** button to verify the 1-click cart restoration.
 8. Place the order: confirm that the record is immediately removed from the Abandoned Carts list.
+
+## Adaptive Field Detection
+
+This engine automatically adapts to any checkout field layout:
+- **Phone-Only Checkouts (e.g. COD / Quick Checkout):** Captures the phone number on blur. The absence of an email field will not trigger errors.
+- **Email-Only Checkouts (e.g. Digital Goods):** Captures the email on blur.
+- **Combined Checkouts (Both Phone & Email):** Captures whichever field is filled first. When the second field is filled, the background process matches the existing record and merges them into a single row without creating duplicate entries.
+- **Order Cleanup:** When an order is completed, the system clears the transient if either the order phone or email matches the saved cart.
