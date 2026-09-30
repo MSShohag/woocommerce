@@ -43,3 +43,11 @@ A lightweight, zero-dependency abandoned cart capture and recovery engine compat
 - **WhatsApp:** Opens a direct chat with the shopper, pre-filling a personalized recovery link.
 - **Copy URL:** Copies the exact 1-click cart restoration link to your clipboard.
 - **Delete / Clear All:** Allows removal of individual records or batch clearing with CSRF nonce verification.
+
+## Adaptive Field Detection
+
+This engine automatically adapts to any checkout field layout:
+- **Phone-Only Checkouts (e.g. COD / Quick Checkout):** Captures the phone number on blur. The absence of an email field will not trigger errors.
+- **Email-Only Checkouts (e.g. Digital Goods):** Captures the email on blur.
+- **Combined Checkouts (Both Phone & Email):** Captures whichever field is filled first. When the second field is filled, the background process matches the existing record and merges them into a single row without creating duplicate entries.
+- **Order Cleanup:** When an order is completed, the system clears the transient if either the order phone or email matches the saved cart.
