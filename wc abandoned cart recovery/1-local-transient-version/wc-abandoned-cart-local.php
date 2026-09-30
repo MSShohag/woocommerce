@@ -249,3 +249,63 @@ function wclocal_clear_transient_on_purchase( $order_id ) {
         }
     }
 }
+// Add submenu under WooCommerce menu
+add_action( 'admin_menu', 'wclocal_register_admin_page' );
+function wclocal_register_admin_page() {
+    add_submenu_page(
+        'woocommerce',
+        'Abandoned Carts',
+        'Abandoned Carts',
+        'manage_woocommerce',
+        'wc-local-abandoned-carts',
+        'wclocal_render_admin_page'
+    );
+}
+
+function wclocal_render_admin_page() {
+    $index = get_option( 'wclocal_abandoned_index', array() );
+    ?>
+    <div class="wrap">
+        <h1 style="margin-bottom: 20px;">Captured Abandoned Carts (Local Transients)</h1>
+
+        <?php if ( empty( $index ) ) : ?>
+            <p>No active abandoned carts found.</p>
+        <?php else : ?>
+            <table class="widefat fixed striped">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Cart Total</th>
+                        <th>Items Count</th>
+                        <th>Captured Time</th>
+                        <th>Email Sent?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    foreach ( $index as $key ) : 
+                        $cart = get_transient( $key );
+                        if ( ! $cart ) continue;
+                    ?>
+                        <tr>
+                            <td><strong><?php echo esc_html( $cart['email'] ); ?></strong></td>
+                            <td><?php echo esc_html( ! empty( $cart['phone'] ) ? $cart['phone'] : '—' ); ?></td>
+                            <td><?php echo wc_price( $cart['total'] ); ?></td>
+                            <td><?php echo esc_html( count( $cart['cart'] ) ); ?> item(s)</td>
+                            <td><?php echo esc_html( human_time_diff( $cart['updated_at'], time() ) . ' ago' ); ?></td>
+                            <td>
+                                <?php if ( ! empty( $cart['email_sent'] ) ) : ?>
+                                    <span style="color: green; font-weight: bold;">Yes</span>
+                                <?php else : ?>
+                                    <span style="color: #ca3535; font-weight: bold;">Pending (Scheduled)</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    </div>
+    <?php
+}
